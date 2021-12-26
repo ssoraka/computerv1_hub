@@ -1,8 +1,7 @@
 package parser;
 
-import parser.ast.BlockStatement;
-import parser.ast.Expression;
-import parser.ast.Statement;
+import com.sun.javafx.fxml.expression.VariableExpression;
+import parser.ast.*;
 import parser.lexer.Token;
 import parser.lexer.TokenType;
 
@@ -21,21 +20,21 @@ public class Parser {
         size = tokens.size();
     }
 
-    public Statement parse() {
-        final BlockStatement result = new BlockStatement();
+//    public Statement parse() {
+//        final BlockStatement result = new BlockStatement();
+//
+//        while (!match(TokenType.EOF)) {
+//            result.add(statement());
+//        }
+//        return result;
+//    }
 
-        while (!match(TokenType.EOF)) {
-            result.add(statement());
-        }
-        return result;
-    }
-
-    private Statement statementOrBlock() {
-        if (get(0).getType() == TokenType.LBRASE) {
-            return block();
-        }
-        return statement();
-    }
+//    private Statement statementOrBlock() {
+//        if (get(0).getType() == TokenType.LBRASE) {
+//            return block();
+//        }
+//        return statement();
+//    }
 //
 //    private Statement block() {
 //        consume(TokenType.LBRASE);
@@ -47,52 +46,30 @@ public class Parser {
 //        return block;
 //    }
 
-    private Statement statement() {
-        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN) {
-            return new FunctionStatement(function());
-        }
-        return assignmentStatement();
-    }
+//    private Statement statement() {
+//        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN) {
+//            return new FunctionStatement(function());
+//        }
+//        return assignmentStatement();
+//    }
 
-    private Statement assignmentStatement() {
-        Token current = get(0);
-        if (lookMatch(0, TokenType.WORD) && lookMatch(1, TokenType.EQ)) {
-            final String variable = consume(TokenType.WORD).getText();
-            consume(TokenType.EQ);
-            return new AssignmentStatement(variable, expression());
-        }
-        if (lookMatch(0,TokenType.WORD) && lookMatch(1, TokenType.LBRACKET)) {
-            ArrayAccessExpression array = element();
-            consume(TokenType.EQ);
-            return new ArrayAssignmentStatement(array, expression());
-        }
-        throw new RuntimeException("Unknown statement");
-    }
+//    private Statement assignmentStatement() {
+//        Token current = get(0);
+//        if (lookMatch(0, TokenType.WORD) && lookMatch(1, TokenType.EQ)) {
+//            final String variable = consume(TokenType.WORD).getText();
+//            consume(TokenType.EQ);
+//            return new AssignmentStatement(variable, expression());
+//        }
+//        if (lookMatch(0,TokenType.WORD) && lookMatch(1, TokenType.LBRACKET)) {
+//            ArrayAccessExpression array = element();
+//            consume(TokenType.EQ);
+//            return new ArrayAssignmentStatement(array, expression());
+//        }
+//        throw new RuntimeException("Unknown statement");
+//    }
 
-
-
-    private Expression expression() {
-        return logicalOr();
-    }
-
-    private Expression logicalOr() {
-        Expression result = logicalAnd();
-        return result;
-    }
-
-    private Expression logicalAnd() {
-        Expression result = equality();
-        return result;
-    }
-
-    private Expression equality() {
-        Expression result = conditional();
-        return result;
-    }
-
-    private Expression conditional() {
-        Expression result = additive();
-        return result;
+    public Expression expression() {
+        return additive();
     }
 
     private Expression additive() {
@@ -145,12 +122,9 @@ public class Parser {
         if (match(TokenType.NUMBER)) {
             return new ValueExpression(Double.parseDouble(current.getText()));
         }
-        if (lookMatch(0,TokenType.WORD) && lookMatch(1, TokenType.LPAREN)) {
-            return function();
-        }
 
         if (match(TokenType.WORD)) {
-            return new VariableExpression(current.getText());
+            return new ValueExpression(current.getText());
         }
 
 
