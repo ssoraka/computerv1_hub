@@ -24,7 +24,7 @@ public class Val {
     }
 
     public Val(double num) {
-        this.name = null;
+        this.name = "";
         this.num = num;
         this.pow = 0;
     }
@@ -53,10 +53,6 @@ public class Val {
         this.pow = pow;
     }
 
-    public Val neg() {
-        return new Val(name, -num, pow);
-    }
-
     public Val add(Val val) {
         return new Val(name, num + val.num, pow);
     }
@@ -73,5 +69,12 @@ public class Val {
     public Val div(Val val) {
         String tmp = "".equals(name) ? val.name : name;
         return new Val(tmp, num / val.num, pow - val.pow);
+    }
+
+    @Override
+    public String toString() {
+        if (num == 0.0) return "0";
+        if (pow == 0) return String.valueOf(num);
+        return String.format("[%.2f*%s^%d]", num, name, pow);
     }
 }

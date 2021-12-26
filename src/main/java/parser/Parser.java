@@ -120,7 +120,8 @@ public class Parser {
         final Token current = get(0);
 
         if (match(TokenType.NUMBER)) {
-            return new ValueExpression(Double.parseDouble(current.getText()));
+            final ValueExpression valueExpression = new ValueExpression(Double.parseDouble(current.getText()));
+            return valueExpression;
         }
 
         if (match(TokenType.WORD)) {

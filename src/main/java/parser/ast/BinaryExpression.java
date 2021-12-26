@@ -1,5 +1,6 @@
 package parser.ast;
 
+import parser.lib.MapValue;
 import parser.lib.Value;
 
 public class BinaryExpression implements Expression{
@@ -15,9 +16,9 @@ public class BinaryExpression implements Expression{
 
 
     @Override
-    public Value eval() {
-        Value value1 = expr1.eval();
-        Value value2 = expr2.eval();
+    public MapValue eval() {
+        MapValue value1 = expr1.eval();
+        MapValue value2 = expr2.eval();
 
         switch (operation) {
             case '*' : return value1.mult(value2);

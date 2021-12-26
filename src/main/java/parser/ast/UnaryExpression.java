@@ -1,7 +1,8 @@
 package parser.ast;
 
-import parser.lib.NumberValue;
-import parser.lib.Value;
+import parser.lib.MapValue;
+//import parser.lib.NumberValue;
+//import parser.lib.Value;
 
 public class UnaryExpression implements Expression {
 
@@ -14,7 +15,7 @@ public class UnaryExpression implements Expression {
     }
 
     @Override
-    public Value eval() {
+    public MapValue eval() {
         switch (operation) {
             case '-' : return expr.eval().neg();
             case '+' :
