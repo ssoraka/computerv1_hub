@@ -74,7 +74,8 @@ public class Val {
     @Override
     public String toString() {
         if (num == 0.0) return "0";
-        if (pow == 0) return String.valueOf(num);
+        if ("".equals(name)) return String.valueOf(num);
+        if (pow == 0) return String.valueOf(1.0);
         return String.format("[%.2f*%s^%d]", num, name, pow);
     }
 }

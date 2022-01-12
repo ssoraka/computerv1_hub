@@ -1,11 +1,9 @@
 package parser.lib;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 
-public class MapValue implements Value {
+public class MapValue /*implements Value*/ {
     private static final Val ZERO = new Val(0.0);
 
     private Map<Integer, Val> map = new HashMap<>();
@@ -15,8 +13,7 @@ public class MapValue implements Value {
     }
 
     public MapValue(double num) {
-        Val val = new Val(num);
-        map.put(0, val);
+        map.put(0, new Val(num));
     }
 
     public MapValue(String name) {
@@ -100,9 +97,9 @@ public class MapValue implements Value {
         return this;
     }
 
-    public double asNumber() {
-        return map.getOrDefault(0, ZERO).getNum();
-    }
+//    public double asNumber() {
+//        return map.getOrDefault(0, ZERO).getNum();
+//    }
 
     public String asString() {
         return toString();
@@ -112,7 +109,7 @@ public class MapValue implements Value {
         if (!map.containsKey(0)) return "0";
 
         StringBuilder sb = new StringBuilder(map.get(0).toString());
-        Set<Integer> set = map.keySet();
+        Set<Integer> set = new HashSet<>(map.keySet());
         set.remove(0);
         for (Integer i : set) {
             if (map.get(i).getNum() > 0) sb.append(" +");

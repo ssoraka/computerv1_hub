@@ -1,6 +1,6 @@
 package parser;
 
-import com.sun.javafx.fxml.expression.VariableExpression;
+//import com.sun.javafx.fxml.expression.VariableExpression;
 import parser.ast.*;
 import parser.lexer.Token;
 import parser.lexer.TokenType;
